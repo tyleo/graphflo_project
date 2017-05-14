@@ -1,0 +1,3 @@
+includeBuild "dep/graphflo"
+includeBuild "dep/guifast"
+includeBuild "dep/libflo"

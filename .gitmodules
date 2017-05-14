@@ -1,0 +1,9 @@
+[submodule "dep/graphflo"]
+	path = dep/graphflo
+	url = https://github.com/tyleo/graphflo.git
+[submodule "dep/guifast"]
+	path = dep/guifast
+	url = https://github.com/tyleo/guifast.git
+[submodule "dep/libflo"]
+	path = dep/libflo
+	url = https://github.com/tyleo/libflo.git

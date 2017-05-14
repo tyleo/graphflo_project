@@ -1,0 +1,108 @@
+// funcs
+import java.nio.file.Files;
+
+def create_directory = {
+    to ->
+        def to_file = file(to);
+        if (!to_file.exists()) {
+            Files.createDirectory(to_file.toPath());
+        }
+}
+
+def create_symlink = {
+    from, to ->
+        def to_file = file(to);
+        if (!to_file.exists()) {
+            def from_file = file(from);
+            Files.createSymbolicLink(to_file.toPath(), from_file.toPath());
+        }
+}
+
+// deps
+task deps_build(dependsOn: [
+    gradle.includedBuild("graphflo").task(":build"),
+    gradle.includedBuild("guifast").task(":build"),
+    gradle.includedBuild("libflo").task(":build")
+])
+
+task deps_init(dependsOn: [
+    gradle.includedBuild("graphflo").task(":init"),
+    gradle.includedBuild("guifast").task(":init")
+])
+
+task deps_test(dependsOn: [
+    gradle.includedBuild("libflo").task(":test")
+])
+
+// project
+task symlink_resources() {
+    doLast {
+        create_symlink(
+            "dep\\libflo\\dep\\libflo_lmod\\res\\module\\libflo",
+            "res\\module\\libflo"
+        )
+
+        create_symlink(
+            "dep\\libflo\\dep\\libflo_action_lmod\\res\\module\\libflo_action",
+            "res\\module\\libflo_action"
+        )
+
+        create_symlink(
+            "dep\\graphflo\\res\\module\\graphflo",
+            "res\\module\\graphflo"
+        )
+
+        create_symlink(
+            "dep\\guifast\\dep\\guifast\\res\\module\\guifast",
+            "res\\module\\guifast"
+        )
+    }
+}
+
+task symlink_target() {
+    doLast {
+        create_directory("target");
+
+        create_symlink(
+            "dep\\libflo\\dep\\libflo_cmdline_host\\target\\debug\\libflo_cmdline_host.exe",
+            "target\\libflo_cmdline_host.exe"
+        )
+
+        create_symlink(
+            "res\\guifast_config.json",
+            "target\\guifast_config.json"
+        )
+
+        create_symlink(
+            "res\\module",
+            "target\\module"
+        )
+
+        create_symlink(
+            "res\\dev.graphflo",
+            "target\\dev.graphflo"
+        )
+
+        create_symlink(
+            "dep\\guifast\\dep\\guifast\\frontend",
+            "target\\guifast"
+        )
+    }
+}
+
+task npm_start(type: Exec) {
+    workingDir "target\\guifast"
+    commandLine "npm.cmd", "start"
+}
+
+task build(dependsOn: [deps_build, symlink_resources, symlink_target])
+
+task debug(dependsOn: [build, npm_start])
+
+task init(dependsOn: [deps_init])
+
+task test(dependsOn: [deps_test])
+
+npm_start.mustRunAfter build
+
+symlink_target.mustRunAfter deps_build

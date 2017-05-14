@@ -1,0 +1,29 @@
+{
+    "dependencies": [
+        {
+            "file": {
+                "path": "libflo"
+            }
+        },
+        {
+            "file": {
+                "path": "libflo_action"
+            }
+        },
+        {
+            "file": {
+                "path": "graphflo"
+            }
+        },
+        {
+            "file": {
+                "path": "graphflo_debug"
+            }
+        },
+        {
+            "file": {
+                "path": "guifast"
+            }
+        }
+    ]
+}

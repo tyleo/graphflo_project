@@ -1,0 +1,45 @@
+{
+    "node_descriptions": [
+        {
+            "title": "TestNode",
+            "has_input": false,
+            "has_output": false,
+            "left_connectors": {
+                "constant": [
+                    { "name": "Input 0" },
+                    { "name": "Input 1" }
+                ]
+            },
+            "right_connectors": {
+                "constant": [
+                    { "name": "Output 0" },
+                    { "name": "Output 1" }
+                ]
+            },
+            "min_width": 10,
+            "min_height": 5
+        },
+        {
+            "title": "Input",
+            "has_input": false,
+            "has_output": false,
+            "left_connectors": {
+                "constant": [
+                    { "name": "Input" }
+                ]
+            },
+            "right_connectors": "none"
+        },
+        {
+            "title": "Output",
+            "has_input": false,
+            "has_output": false,
+            "left_connectors": "none",
+            "right_connectors": {
+                "constant": [
+                    { "name": "Output" }
+                ]
+            }
+        }
+    ]
+}
